@@ -39,7 +39,7 @@ export class Board {
     }
   }
   drawTableWithPills() {
-    let addPill = new Pill();
+    let addPill = new Pill(this.arrayCellColor);
     this.arrayPills.push(addPill);
     let pill1: any = addPill.wholePill.pill1;
     let pill2: any = addPill.wholePill.pill2;
