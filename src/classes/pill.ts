@@ -2,12 +2,12 @@ import { halfPill } from "./halfpill.js";
 export class Pill {
   wholePill: { pill1?: any; pill2: any };
   blocked: boolean;
-  arrayCellColor: any;
+  arrayPills: any;
   fall: any;
-  constructor(arrayCellColor: any) {
+  constructor(arrayPills: any) {
     this.blocked = false;
     this.wholePill = { pill1: new halfPill(3, 0), pill2: new halfPill(4, 0) };
-    this.arrayCellColor = arrayCellColor;
+    this.arrayPills = arrayPills;
     this.interval(500);
     this.movement();
   }
@@ -20,8 +20,8 @@ export class Pill {
       if (
         pill1.y === 15 ||
         pill2.y === 15 ||
-        this.arrayCellColor[pill1.y + 1][pill1.x] != "" ||
-        this.arrayCellColor[pill2.y + 1][pill2.x] != ""
+        this.arrayPills[pill1.y + 1][pill1.x] != "" ||
+        this.arrayPills[pill2.y + 1][pill2.x] != ""
       ) {
         this.blocked = true;
         clearInterval(this.fall);
