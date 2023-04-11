@@ -50,49 +50,37 @@ export class Board {
       this.clear();
       this.arrayCell[pill1.y][pill1.x].elem.style.backgroundColor = pill1.color;
       this.arrayCell[pill2.y][pill2.x].elem.style.backgroundColor = pill2.color;
-      this.beating();
       if (addPill.blocked === true) {
         clearInterval(fallen);
         this.arrayPills[pill1.y][pill1.x] = pill1;
         this.arrayPills[pill2.y][pill2.x] = pill2;
+        this.beating();
         this.drawTableWithPills();
       }
     }, 50);
   }
-  checkColorHorizontally(y: number, dx: number, color: string) {
+  checkColorHorizontally(y: number, x0: number) {
     let array = [];
-    array.push(this.arrayPills[y][dx]);
-    for (let x = dx; x < 7; x++) {
-      if (
-        this.arrayPills[y][x].color == color &&
-        this.arrayPills[y][x + 1].color == color
-      ) {
-        array.push(this.arrayPills[y][x + 1]);
-      } else {
-        if (array.length >= 4) {
-          array.forEach((elm) => {
-            this.deletePills.push(elm);
-          });
-        }
-      }
+    let color = this.arrayPills[y][x0].color;
+    for (let x = x0; x <= 7 && this.arrayPills[y][x].color == color; x++) {
+      array.push(this.arrayPills[y][x]);
+    }
+    if (array.length >= 4) {
+      array.forEach((elm) => {
+        this.deletePills.push(elm);
+      });
     }
   }
-  checkColorVertically(dy: number, x: number, color: string) {
+  checkColorVertically(y0: number, x: number) {
     let array = [];
-    array.push(this.arrayPills[dy][x]);
-    for (let y = dy; y < 15; y++) {
-      if (
-        this.arrayPills[y][x].color == color &&
-        this.arrayPills[y + 1][x].color == color
-      ) {
-        array.push(this.arrayPills[y + 1][x]);
-      } else {
-        if (array.length >= 4) {
-          array.forEach((elm) => {
-            this.deletePills.push(elm);
-          });
-        }
-      }
+    let color = this.arrayPills[y0][x].color;
+    for (let y = y0; y <= 15 && this.arrayPills[y][x].color == color; y++) {
+      array.push(this.arrayPills[y][x]);
+    }
+    if (array.length >= 4) {
+      array.forEach((elm) => {
+        this.deletePills.push(elm);
+      });
     }
   }
 
@@ -100,8 +88,8 @@ export class Board {
     for (let y = 0; y < 16; y++) {
       for (let x = 0; x < 8; x++) {
         if (this.arrayPills[y][x] != "") {
-          this.checkColorHorizontally(y, x, this.arrayPills[y][x].color);
-          this.checkColorVertically(y, x, this.arrayPills[y][x].color);
+          this.checkColorHorizontally(y, x);
+          this.checkColorVertically(y, x);
         }
       }
     }

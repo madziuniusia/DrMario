@@ -79,7 +79,15 @@ export class Pill {
           pill2.x + dx2 >= 0 &&
           pill2.x + dx2 <= 7 &&
           pill1.y + dy1 >= 0 &&
-          pill2.y + dy2 >= 0
+          pill2.y + dy2 >= 0 &&
+          pill1.y + dy1 <= 15 &&
+          pill2.y + dy2 <= 15 &&
+          this.arrayPills[pill1.y][pill1.x + dx1] == "" &&
+          this.arrayPills[pill2.y][pill2.x + dx2] == "" &&
+          this.arrayPills[pill1.y + dy1][pill1.x] == "" &&
+          this.arrayPills[pill2.y + dy2][pill2.x] == "" &&
+          this.arrayPills[pill1.y + dy1][pill1.x + dx1] == "" &&
+          this.arrayPills[pill2.y + dy2][pill2.x + dx2] == ""
         ) {
           pill1.x += dx1;
           pill2.x += dx2;
