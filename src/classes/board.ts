@@ -9,7 +9,9 @@ export class Board {
   arrayCell: BoardConfig[][] = Array.from(Array(16), () => new Array(0));
   arrayPills: any[][] = Array.from(Array(16), () => new Array(8));
   deletePills: any[] = [];
+  id: number;
   constructor() {
+    this.id = 0;
     this.createTable();
     this.drawTableWithPills();
     this.arrayPills.forEach((el) => {
@@ -34,15 +36,18 @@ export class Board {
       for (let x = 0; x < 8; x++) {
         if (this.arrayPills[y][x] == "") {
           this.arrayCell[y][x].elem.style.backgroundColor = "";
+          this.arrayCell[y][x].elem.innerHTML = "";
         } else {
           this.arrayCell[y][x].elem.style.backgroundColor =
             this.arrayPills[y][x].color;
+          this.arrayCell[y][x].elem.innerHTML = this.arrayPills[y][x].id;
         }
       }
     }
   }
   drawTableWithPills() {
-    let addPill = new Pill(this.arrayPills);
+    let addPill = new Pill(this.arrayPills, this.id);
+    this.id++;
     let pill1: any = addPill.wholePill.pill1;
     let pill2: any = addPill.wholePill.pill2;
 

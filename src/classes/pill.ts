@@ -4,9 +4,12 @@ export class Pill {
   blocked: boolean;
   arrayPills: any;
   fall: any;
-  constructor(arrayPills: any) {
+  constructor(arrayPills: any, id: number) {
     this.blocked = false;
-    this.wholePill = { pill1: new halfPill(3, 0), pill2: new halfPill(4, 0) };
+    this.wholePill = {
+      pill1: new halfPill(3, 0, id),
+      pill2: new halfPill(4, 0, id),
+    };
     this.arrayPills = arrayPills;
     this.interval(500);
     this.movement();

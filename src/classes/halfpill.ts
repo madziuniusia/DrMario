@@ -3,11 +3,13 @@ export class halfPill {
   x: number;
   y: number;
   blocked: boolean;
-  constructor(x: number, y: number) {
+  id: number;
+  constructor(x: number, y: number, id: number) {
     this.color = this.randomColor();
     this.blocked = false;
     this.x = x;
     this.y = y;
+    this.id = id;
   }
 
   randomColor() {
