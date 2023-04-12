@@ -1,4 +1,5 @@
 import { Pill } from "./Pill.js";
+import { Virus } from "./virus";
 
 interface BoardConfig {
   elem: HTMLDivElement;
@@ -11,14 +12,15 @@ export class Board {
   deletePills: any[] = [];
   id: number;
   constructor() {
-    this.id = 0;
-    this.createTable();
-    this.drawTableWithPills();
     this.arrayPills.forEach((el) => {
       for (let i = 0; i < el.length; i++) {
         el[i] = "";
       }
     });
+    this.id = 0;
+    this.createTable();
+    this.addVirus();
+    this.drawTableWithPills();
   }
   createTable() {
     const board = document.getElementById("board");
@@ -29,6 +31,13 @@ export class Board {
         this.arrayCell[y].push({ elem: cell, x: x, y: y });
         board?.appendChild(cell);
       }
+    }
+  }
+  addVirus() {
+    const ArrayWithColors = ["#9F3632", "#3A5E52", "#314D65", "#D4A152"];
+    for (let i = 0; i < ArrayWithColors.length; i++) {
+      let v = new Virus(this.arrayPills, ArrayWithColors[i]);
+      this.arrayPills[v.y][v.x] = v;
     }
   }
   clear() {
@@ -102,5 +111,14 @@ export class Board {
       this.arrayPills[elm.y][elm.x] = "";
     });
     this.deletePills = [];
+    this.fallen();
+  }
+
+  fallen() {
+    for (let y = 0; y < 16; y++) {
+      for (let x = 0; x < 8; x++) {
+        console.log("sprawdzam");
+      }
+    }
   }
 }
