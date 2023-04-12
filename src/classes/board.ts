@@ -34,7 +34,7 @@ export class Board {
     }
   }
   addVirus() {
-    const ArrayWithColors = ["#9F3632", "#3A5E52", "#314D65", "#D4A152"];
+    const ArrayWithColors = ["#9F3632", "#3A5E52", "#314D65"];
     for (let i = 0; i < ArrayWithColors.length; i++) {
       let v = new Virus(this.arrayPills, ArrayWithColors[i]);
       this.arrayPills[v.y][v.x] = v;
@@ -117,7 +117,7 @@ export class Board {
   fallen() {
     for (let y = 0; y < 16; y++) {
       for (let x = 0; x < 8; x++) {
-        console.log("sprawdzam");
+        console.log("sprawdzam czy cos jest do upadania");
       }
     }
   }
