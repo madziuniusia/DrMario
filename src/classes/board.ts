@@ -34,7 +34,7 @@ export class Board {
     }
   }
   addVirus() {
-    const ArrayWithColors = ["#9F3632", "#3A5E52", "#314D65"];
+    const ArrayWithColors = ["yellow", "blue", "brown"];
     for (let i = 0; i < ArrayWithColors.length; i++) {
       let v = new Virus(this.arrayPills, ArrayWithColors[i]);
       this.arrayPills[v.y][v.x] = v;
@@ -45,11 +45,17 @@ export class Board {
       for (let x = 0; x < 8; x++) {
         if (this.arrayPills[y][x] == "") {
           this.arrayCell[y][x].elem.style.backgroundColor = "";
+          this.arrayCell[y][x].elem.style.backgroundImage = "none";
           this.arrayCell[y][x].elem.innerHTML = "";
         } else {
-          this.arrayCell[y][x].elem.style.backgroundColor =
-            this.arrayPills[y][x].color;
-          this.arrayCell[y][x].elem.innerHTML = this.arrayPills[y][x].id;
+          if (this.arrayPills[y][x].id == "V") {
+            this.arrayCell[y][x].elem.style.backgroundImage =
+              this.arrayPills[y][x].image;
+          } else {
+            this.arrayCell[y][x].elem.style.backgroundColor =
+              this.arrayPills[y][x].color;
+            this.arrayCell[y][x].elem.innerHTML = this.arrayPills[y][x].id;
+          }
         }
       }
     }
@@ -71,7 +77,7 @@ export class Board {
         this.beating();
         this.drawTableWithPills();
       }
-    }, 50);
+    }, 100);
   }
   checkColorHorizontally(y: number, x0: number) {
     let array = [];
@@ -115,9 +121,16 @@ export class Board {
   }
 
   fallen() {
-    for (let y = 0; y < 16; y++) {
+    for (let y = 15; y >= 0; y--) {
       for (let x = 0; x < 8; x++) {
-        console.log("sprawdzam czy cos jest do upadania");
+        if (
+          this.arrayPills[y][x] != "" &&
+          this.arrayPills[y - 1][x] == "" &&
+          this.arrayPills[y][x].id != "V"
+        ) {
+          this.arrayPills[y - 1][x] == this.arrayPills[y][x];
+          //this.arrayPills[y][x] = "";
+        }
       }
     }
   }

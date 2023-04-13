@@ -13,7 +13,7 @@ export class halfPill {
   }
 
   randomColor() {
-    const ArrayWithColors = ["#9F3632", "#3A5E52", "#314D65"];
+    const ArrayWithColors = ["yellow", "blue", "brown"];
     return ArrayWithColors[Math.floor(Math.random() * 3)];
   }
 }

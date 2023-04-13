@@ -1,17 +1,27 @@
-body {
+HTML {
+    box-sizing: border-box;
+    background-color: black;
+}
+
+#container {
     margin: 0;
     padding: 0;
     display: flex;
-    height: 100vh;
     justify-content: center;
     align-items: center;
     user-select: none;
+    background-image: url("/src/img/background.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    height: 750px;
+    background-position: center;
 }
 
 #board {
-    background-color: white;
-    width: 270px;
+    width: 280px;
     display: flex;
+    padding-left: 64px;
+    padding-top: 120px;
     justify-content: center;
     align-items: center;
     flex-wrap: wrap;
@@ -20,5 +30,13 @@ body {
 .cell {
     width: 30px;
     height: 30px;
-    border: 1px solid black;
+    border: 1px solid red;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+#blueVirus,
+#yellowVirus,
+#brownVirus {
+    position: absolute;
 }
