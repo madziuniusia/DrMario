@@ -4,7 +4,7 @@ export class Loupe {
   posiction?;
   times: any;
   repeat: boolean;
-  destId: string;
+  destId: any;
 
   constructor(ob: any, destId: string) {
     this.tickNumber = 0;
@@ -12,15 +12,12 @@ export class Loupe {
     this.posiction = ob.posiction;
     this.times = ob.times;
     this.repeat = ob.repeat;
-    this.destId = destId;
+    this.destId = document.getElementById(destId);
   }
 
   renderFrame(i: number) {
-    console.log(this.destId);
-
-    let elem: any = document.getElementById(this.destId);
-    elem.style.top = this.posiction[i].top + "px";
-    elem.style.left = this.posiction[i].left + "px";
+    this.destId.style.top = this.posiction[i].top + "px";
+    this.destId.style.left = this.posiction[i].left + "px";
   }
 
   goAnim() {

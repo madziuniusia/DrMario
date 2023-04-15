@@ -6,21 +6,17 @@ HTML {
 #container {
     margin: 0;
     padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     user-select: none;
     background-image: url("/src/img/background.png");
     background-size: contain;
     background-repeat: no-repeat;
-    height: 750px;
-    background-position: center;
+    height: 550px;
 }
 
 #board {
-    width: 280px;
+    width: 200px;
     display: flex;
-    padding-left: 64px;
+    padding-left: 380px;
     padding-top: 120px;
     justify-content: center;
     align-items: center;
@@ -28,8 +24,8 @@ HTML {
 }
 
 .cell {
-    width: 30px;
-    height: 30px;
+    width: 23px;
+    height: 23px;
     border: 1px solid red;
     background-position: center;
     background-repeat: no-repeat;
@@ -39,4 +35,15 @@ HTML {
 #yellowVirus,
 #brownVirus {
     position: absolute;
+}
+
+#points {
+    width: 23px;
+    height: 23px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: absolute;
+    top: 123px;
+    left: 215px;
 }

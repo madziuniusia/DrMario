@@ -1,3 +1,4 @@
+import internal from "stream";
 import { Pill } from "./Pill.js";
 import { Virus } from "./virus";
 
@@ -11,6 +12,7 @@ export class Board {
   arrayPills: any[][] = Array.from(Array(16), () => new Array(8));
   deletePills: any[] = [];
   id: number;
+  gameInterval: any;
   constructor() {
     this.arrayPills.forEach((el) => {
       for (let i = 0; i < el.length; i++) {
@@ -18,6 +20,7 @@ export class Board {
       }
     });
     this.id = 0;
+    this.gameInterval = 0;
     this.createTable();
     this.addVirus();
     this.drawTableWithPills();
@@ -66,15 +69,17 @@ export class Board {
     let pill1: any = addPill.wholePill.pill1;
     let pill2: any = addPill.wholePill.pill2;
 
-    let fallen = setInterval(() => {
+    this.gameInterval = setInterval(() => {
       this.clear();
+      this.points();
       this.arrayCell[pill1.y][pill1.x].elem.style.backgroundColor = pill1.color;
       this.arrayCell[pill2.y][pill2.x].elem.style.backgroundColor = pill2.color;
       if (addPill.blocked === true) {
-        clearInterval(fallen);
+        clearInterval(this.gameInterval);
         this.arrayPills[pill1.y][pill1.x] = pill1;
         this.arrayPills[pill2.y][pill2.x] = pill2;
         this.beating();
+        this.fallen();
         this.drawTableWithPills();
       }
     }, 100);
@@ -116,22 +121,43 @@ export class Board {
     this.deletePills.forEach((elm) => {
       this.arrayPills[elm.y][elm.x] = "";
     });
+    /* for (let i = 0; i < this.deletePills.length; i++) {
+      this.arrayPills[this.deletePills[i].y][this.deletePills[i].x] = "";
+    } */
     this.deletePills = [];
-    this.fallen();
+  }
+
+  points() {
+    let Virus = [];
+    for (let y = 0; y < 16; y++) {
+      for (let x = 0; x < 8; x++) {
+        if (this.arrayPills[y][x].id == "V") Virus.push(this.arrayPills[y][x]);
+      }
+    }
+    let points = 300 - Virus.length * 100;
+    let pointsDiv: any = document.getElementById("points");
+    pointsDiv.style.backgroundImage =
+      "url(./src/img/numbers/" + (4 - Virus.length) + ".png)";
+    localStorage.setItem("points", points.toString());
+    if (localStorage.getItem("points") == "300") {
+      this.theEnd();
+    }
   }
 
   fallen() {
-    for (let y = 15; y >= 0; y--) {
+    for (let y = 0; y < 15; y++) {
       for (let x = 0; x < 8; x++) {
-        if (
-          this.arrayPills[y][x] != "" &&
-          this.arrayPills[y - 1][x] == "" &&
-          this.arrayPills[y][x].id != "V"
-        ) {
-          this.arrayPills[y - 1][x] == this.arrayPills[y][x];
-          //this.arrayPills[y][x] = "";
+        if (this.arrayPills[y][x] != "" && this.arrayPills[y][x].id != "V") {
+          for (let i = y; i < 15; i++) {
+            if (this.arrayPills[i + 1][x] == "") {
+              this.arrayPills[i + 1][x] = this.arrayPills[i][x];
+              this.arrayPills[i][x] = "";
+            }
+            break;
+          }
         }
       }
     }
   }
+  theEnd() {}
 }

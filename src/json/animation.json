@@ -2,28 +2,28 @@
     "virusBlue": {
         "posiction": [
             {
-                "top": 530,
-                "left": 420
+                "top": 380,
+                "left": 65
             },
             {
-                "top": 620,
-                "left": 480
+                "top": 330,
+                "left": 100
             },
             {
-                "top": 620,
-                "left": 580
+                "top": 330,
+                "left": 170
             },
             {
-                "top": 530,
-                "left": 620
+                "top": 380,
+                "left": 200
             },
             {
-                "top": 430,
-                "left": 560
+                "top": 426,
+                "left": 170
             },
             {
-                "top": 430,
-                "left": 480
+                "top": 426,
+                "left": 100
             }
         ],
         "times": [
@@ -39,28 +39,28 @@
     "virusYellow": {
         "posiction": [
             {
-                "top": 430,
-                "left": 560
+                "top": 426,
+                "left": 170
             },
             {
-                "top": 430,
-                "left": 480
+                "top": 426,
+                "left": 100
             },
             {
-                "top": 530,
-                "left": 420
+                "top": 380,
+                "left": 65
             },
             {
-                "top": 620,
-                "left": 480
+                "top": 330,
+                "left": 100
             },
             {
-                "top": 620,
-                "left": 580
+                "top": 330,
+                "left": 170
             },
             {
-                "top": 530,
-                "left": 620
+                "top": 380,
+                "left": 200
             }
         ],
         "times": [
@@ -76,28 +76,28 @@
     "virusBrown": {
         "posiction": [
             {
-                "top": 620,
-                "left": 580
+                "top": 330,
+                "left": 170
             },
             {
-                "top": 530,
-                "left": 620
+                "top": 380,
+                "left": 200
             },
             {
-                "top": 430,
-                "left": 560
+                "top": 426,
+                "left": 170
             },
             {
-                "top": 430,
-                "left": 480
+                "top": 426,
+                "left": 100
             },
             {
-                "top": 530,
-                "left": 420
+                "top": 380,
+                "left": 65
             },
             {
-                "top": 620,
-                "left": 480
+                "top": 330,
+                "left": 100
             }
         ],
         "times": [

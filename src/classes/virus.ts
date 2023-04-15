@@ -1,16 +1,18 @@
-export class Virus {
-  color: string;
+interface VirusConfig {
   x: number;
   y: number;
-  id: string;
+  readonly id: string;
+}
+export class Virus {
+  color: string;
+  x = 0;
+  y = 0;
+  id = "V";
   arrayPills: any;
   image?;
   constructor(arrayPills: any, color: string) {
     this.arrayPills = arrayPills;
     this.color = color;
-    this.y = 0;
-    this.x = 0;
-    this.id = "V";
     this.image = this.imageUrl();
     this.randomPosiction();
   }

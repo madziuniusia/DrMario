@@ -1,11 +1,16 @@
 import { halfPill } from "./halfpill.js";
-export class Pill {
-  wholePill: { pill1?: any; pill2: any };
-  blocked: boolean;
+interface PillConfig {
+  blocked?: boolean;
+  blockedKeyDown: boolean;
+}
+export class Pill implements PillConfig {
+  blocked = false;
+  blockedKeyDown = false;
+  wholePill: { pill1: any; pill2: any };
   arrayPills: any;
   fall: any;
+
   constructor(arrayPills: any, id: number) {
-    this.blocked = false;
     this.wholePill = {
       pill1: new halfPill(3, 0, id),
       pill2: new halfPill(4, 0, id),
@@ -34,7 +39,7 @@ export class Pill {
 
   movement() {
     document.addEventListener("keydown", (e) => {
-      if (this.blocked === false) {
+      if (this.blockedKeyDown === false) {
         let dx1 = 0,
           dx2 = 0,
           dy1 = 0,
@@ -73,6 +78,7 @@ export class Pill {
             }
           }
         } else if (e.key === "s" || e.key == "ArrowDown") {
+          this.blockedKeyDown = true;
           clearInterval(this.fall);
           this.interval(50);
         }
