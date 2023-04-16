@@ -1,4 +1,3 @@
-import internal from "stream";
 import { Pill } from "./Pill.js";
 import { Virus } from "./virus";
 
@@ -11,6 +10,7 @@ export class Board {
   arrayCell: BoardConfig[][] = Array.from(Array(16), () => new Array(0));
   arrayPills: any[][] = Array.from(Array(16), () => new Array(8));
   deletePills: any[] = [];
+  
   id: number;
   gameInterval: any;
   constructor() {
@@ -71,6 +71,7 @@ export class Board {
 
     this.gameInterval = setInterval(() => {
       this.clear();
+      this.fallen();
       this.points();
       this.arrayCell[pill1.y][pill1.x].elem.style.backgroundColor = pill1.color;
       this.arrayCell[pill2.y][pill2.x].elem.style.backgroundColor = pill2.color;
@@ -79,9 +80,12 @@ export class Board {
         this.arrayPills[pill1.y][pill1.x] = pill1;
         this.arrayPills[pill2.y][pill2.x] = pill2;
         this.beating();
-        this.fallen();
         this.drawTableWithPills();
       }
+
+       document.addEventListener("keydown", (e) => {
+        if (e.key == "q") clearInterval(this.gameInterval);
+       })       
     }, 100);
   }
   checkColorHorizontally(y: number, x0: number) {
@@ -109,7 +113,9 @@ export class Board {
     }
   }
 
+
   beating() {
+
     for (let y = 0; y < 16; y++) {
       for (let x = 0; x < 8; x++) {
         if (this.arrayPills[y][x] != "") {
@@ -118,13 +124,13 @@ export class Board {
         }
       }
     }
-    this.deletePills.forEach((elm) => {
-      this.arrayPills[elm.y][elm.x] = "";
-    });
-    /* for (let i = 0; i < this.deletePills.length; i++) {
+ 
+    for (let i = 0; i < this.deletePills.length; i++) {
       this.arrayPills[this.deletePills[i].y][this.deletePills[i].x] = "";
-    } */
+    }
     this.deletePills = [];
+
+
   }
 
   points() {
@@ -145,19 +151,19 @@ export class Board {
   }
 
   fallen() {
+
     for (let y = 0; y < 15; y++) {
       for (let x = 0; x < 8; x++) {
         if (this.arrayPills[y][x] != "" && this.arrayPills[y][x].id != "V") {
-          for (let i = y; i < 15; i++) {
-            if (this.arrayPills[i + 1][x] == "") {
-              this.arrayPills[i + 1][x] = this.arrayPills[i][x];
-              this.arrayPills[i][x] = "";
+            if (this.arrayPills[y + 1][x] == "") {
+              this.arrayPills[y + 1][x] = this.arrayPills[y][x];
+              this.arrayPills[y + 1][x].y = y+1             
+              this.arrayPills[y][x] = "";
             }
-            break;
           }
         }
-      }
     }
+    this.beating();
   }
   theEnd() {}
 }
