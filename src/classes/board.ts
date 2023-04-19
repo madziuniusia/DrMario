@@ -10,7 +10,6 @@ export class Board {
   arrayCell: BoardConfig[][] = Array.from(Array(16), () => new Array(0));
   arrayPills: any[][] = Array.from(Array(16), () => new Array(8));
   deletePills: any[] = [];
-  
   id: number;
   gameInterval: any;
   constructor() {
@@ -82,10 +81,14 @@ export class Board {
         this.beating();
         this.drawTableWithPills();
       }
-
-       document.addEventListener("keydown", (e) => {
-        if (e.key == "q") clearInterval(this.gameInterval);
-       })       
+      if (localStorage.getItem("points") == "300") {
+        clearInterval(this.gameInterval);
+        this.theEnd("StageComplete");
+      }
+      if (this.arrayPills[0][3] != "" || this.arrayPills[0][4] != "") {
+        clearInterval(this.gameInterval);
+        this.theEnd("GameOver");
+      }
     }, 100);
   }
   checkColorHorizontally(y: number, x0: number) {
@@ -113,9 +116,7 @@ export class Board {
     }
   }
 
-
   beating() {
-
     for (let y = 0; y < 16; y++) {
       for (let x = 0; x < 8; x++) {
         if (this.arrayPills[y][x] != "") {
@@ -124,13 +125,11 @@ export class Board {
         }
       }
     }
- 
+
     for (let i = 0; i < this.deletePills.length; i++) {
       this.arrayPills[this.deletePills[i].y][this.deletePills[i].x] = "";
     }
     this.deletePills = [];
-
-
   }
 
   points() {
@@ -141,29 +140,35 @@ export class Board {
       }
     }
     let points = 300 - Virus.length * 100;
-    let pointsDiv: any = document.getElementById("points");
+    const pointsDiv: any = document.getElementById("points");
+    const numberOfViruses: any = document.getElementById("numberOfViruses");
     pointsDiv.style.backgroundImage =
-      "url(./src/img/numbers/" + (4 - Virus.length) + ".png)";
+      "url(./src/img/numbers/" + (3 - Virus.length) + ".png)";
+    numberOfViruses.style.backgroundImage =
+      "url(./src/img/numbers/" + Virus.length + ".png)";
     localStorage.setItem("points", points.toString());
-    if (localStorage.getItem("points") == "300") {
-      this.theEnd();
-    }
   }
 
   fallen() {
-
     for (let y = 0; y < 15; y++) {
       for (let x = 0; x < 8; x++) {
         if (this.arrayPills[y][x] != "" && this.arrayPills[y][x].id != "V") {
-            if (this.arrayPills[y + 1][x] == "") {
-              this.arrayPills[y + 1][x] = this.arrayPills[y][x];
-              this.arrayPills[y + 1][x].y = y+1             
-              this.arrayPills[y][x] = "";
-            }
+          if (this.arrayPills[y + 1][x] == "") {
+            this.arrayPills[y + 1][x] = this.arrayPills[y][x];
+            this.arrayPills[y + 1][x].y = y + 1;
+            this.arrayPills[y][x] = "";
           }
         }
+      }
     }
     this.beating();
   }
-  theEnd() {}
+  theEnd(endData: string) {
+    const endGame: any = document.getElementById("endGame");
+    endGame.style.backgroundImage = "url('/src/img/" + endData + ".png')";
+    if (endData === "GameOver") {
+      const mario: any = document.getElementById("mario");
+      mario.style.backgroundImage = "url('/src/img/GameOverMario.png')";
+    }
+  }
 }

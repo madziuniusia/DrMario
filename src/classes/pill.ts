@@ -12,8 +12,8 @@ export class Pill implements PillConfig {
 
   constructor(arrayPills: any, id: number) {
     this.wholePill = {
-      pill1: new halfPill(3, 0, id),
-      pill2: new halfPill(4, 0, id),
+      pill1: new halfPill(3, -1, id),
+      pill2: new halfPill(4, -1, id),
     };
     this.arrayPills = arrayPills;
     this.interval(500);
@@ -35,7 +35,7 @@ export class Pill implements PillConfig {
         this.blocked = true;
         this.blockedKeyDown = true;
       }
-      console.log("- pill" + " " + pill1.y + "|" + pill2.y)
+      console.log("- pill" + " " + pill1.y + "|" + pill2.y);
     }, x);
   }
 
@@ -51,12 +51,12 @@ export class Pill implements PillConfig {
 
         if (e.key === "a" || e.key === "ArrowLeft") {
           dx1 = dx2 = -1;
-          console.log(">>> KEY MOVE")
+          console.log(">>> KEY MOVE");
         } else if (e.key === "d" || e.key === "ArrowRight") {
           dx1 = dx2 = 1;
-          console.log(">>> KEY RIGHT")
+          console.log(">>> KEY RIGHT");
         } else if (e.key === "w" || e.key === "ArrowUp") {
-         console.log(">>> KEY UP")
+          console.log(">>> KEY UP");
           if (pill1.x === pill2.x) {
             if (pill1.y < pill2.y) {
               dx2 = 1;
@@ -70,8 +70,8 @@ export class Pill implements PillConfig {
             else dx2 = dy2 = -1;
           }
         } else if (e.key == "Shift") {
-         console.log(">>> KEY SHIFT")
-         if (pill1.x === pill2.x) {
+          console.log(">>> KEY SHIFT");
+          if (pill1.x === pill2.x) {
             if (pill1.y < pill2.y) dx2 = dy2 = -1;
             else dx2 = dy2 = 1;
           } else {
@@ -84,7 +84,7 @@ export class Pill implements PillConfig {
             }
           }
         } else if (e.key === "s" || e.key == "ArrowDown") {
-          console.log(">>> KEY DOWN")
+          console.log(">>> KEY DOWN");
           this.blockedKeyDown = true;
           clearInterval(this.fall);
           this.interval(50);
@@ -99,11 +99,11 @@ export class Pill implements PillConfig {
           pill1.y + dy1 <= 15 &&
           pill2.y + dy2 <= 15 &&
           this.arrayPills[pill1.y + dy1][pill1.x + dx1] == "" &&
-          this.arrayPills[pill2.y + dy2][pill2.x + dx2] == ""  &&
+          this.arrayPills[pill2.y + dy2][pill2.x + dx2] == "" &&
           this.arrayPills[pill1.y + dy1][pill1.x] == "" &&
           this.arrayPills[pill2.y + dy2][pill2.x] == "" &&
           this.arrayPills[pill1.y][pill1.x + dx1] == "" &&
-          this.arrayPills[pill2.y][pill2.x + dx2] == "" 
+          this.arrayPills[pill2.y][pill2.x + dx2] == ""
         ) {
           pill1.x += dx1;
           pill2.x += dx2;
