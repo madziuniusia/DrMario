@@ -15,5 +15,14 @@
     "noImplicitReturns": true,
     "skipLibCheck": true
   },
+   "typedocOptions": {
+        "entryPoints": 
+        ["src/classes/board.ts", 
+        "src/classes/pill.ts", 
+        "src/classes/halfpill.ts",
+        "src/classes/virus.ts"
+      ],
+        "out": "docs"
+    },
   "include": ["src"]
 }

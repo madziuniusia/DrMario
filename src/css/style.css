@@ -17,7 +17,7 @@ HTML {
     width: 200px;
     display: flex;
     padding-left: 380px;
-    padding-top: 120px;
+    padding-top: 140px;
     justify-content: center;
     align-items: center;
     flex-wrap: wrap;
@@ -26,7 +26,6 @@ HTML {
 .cell {
     width: 23px;
     height: 23px;
-    border: 1px solid red;
     background-position: center;
     background-repeat: no-repeat;
 }

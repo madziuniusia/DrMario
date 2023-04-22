@@ -1,15 +1,38 @@
+/**
+ * This class describes an entire pill composed of two halfill modules
+ * @module
+ */
 import { halfPill } from "./halfpill.js";
+/** @ignore */
 interface PillConfig {
   blocked?: boolean;
   blockedKeyDown: boolean;
 }
 export class Pill implements PillConfig {
+  /**
+   * @param blocked This is boolen which informs us if the pill has already dropped
+   * @defaultValue `false` if `blocked` is `true`, otherwise `false`
+   */
   blocked = false;
+  /**
+   * @param blockedKeyDown This is boolen which informs us if event keydown has already been executed
+   * @defaultValue `false` if `blocked` is `true`, otherwise `false`
+   */
   blockedKeyDown = false;
+  /**
+   * //@param wholePill two new classes halfPill
+   * @ignore
+   */
   wholePill: { pill1: any; pill2: any };
+  /**
+   * @param arrayPills array `16x8`. Informaction from the board class
+   */
   arrayPills: any;
+  /**
+   * @ignore
+   */
   fall: any;
-
+  /** @ignore */
   constructor(arrayPills: any, id: number) {
     this.wholePill = {
       pill1: new halfPill(3, -1, id),
@@ -19,6 +42,10 @@ export class Pill implements PillConfig {
     this.interval(500);
     this.movement();
   }
+  /**
+   * @param x is the interval speed
+   * @returns falling interval
+   */
   interval(x: number) {
     let pill1 = this.wholePill.pill1;
     let pill2 = this.wholePill.pill2;
@@ -38,7 +65,9 @@ export class Pill implements PillConfig {
       console.log("- pill" + " " + pill1.y + "|" + pill2.y);
     }, x);
   }
-
+  /**
+   * @returns this function changes posiction x and y depending on the key you clicked
+   */
   movement() {
     document.addEventListener("keydown", (e) => {
       if (this.blockedKeyDown == false) {
