@@ -66,14 +66,14 @@ export class Board {
           this.arrayCell[y][x].elem.style.backgroundImage = "none";
           this.arrayCell[y][x].elem.innerHTML = "";
         } else {
-          if (this.arrayPills[y][x].id == "V") {
-            this.arrayCell[y][x].elem.style.backgroundImage =
-              this.arrayPills[y][x].image;
+          this.arrayCell[y][x].elem.style.backgroundImage =
+            this.arrayPills[y][x].image;
+          /* if (this.arrayPills[y][x].id == "V") {
           } else {
             this.arrayCell[y][x].elem.style.backgroundColor =
               this.arrayPills[y][x].color;
             this.arrayCell[y][x].elem.innerHTML = this.arrayPills[y][x].id;
-          }
+          } */
         }
       }
     }
@@ -91,10 +91,11 @@ export class Board {
         this.clear();
         this.points();
 
-        this.arrayCell[pill1.y][pill1.x].elem.style.backgroundColor =
-          pill1.color;
-        this.arrayCell[pill2.y][pill2.x].elem.style.backgroundColor =
-          pill2.color;
+        this.arrayCell[pill1.y][pill1.x].elem.style.backgroundImage =
+          pill1.image;
+        this.arrayCell[pill2.y][pill2.x].elem.style.backgroundImage =
+          pill2.image;
+
         if (addPill.blocked === true) {
           clearInterval(this.gameInterval);
           this.arrayPills[pill1.y][pill1.x] = pill1;
@@ -196,32 +197,34 @@ export class Board {
             }
 
             if (found.length != 2) {
+              this.arrayPills[y][x].image =
+                "url(./src/img/" + this.arrayPills[y][x].color + "Dot.png)";
               this.arrayPills[y + 1][x] = this.arrayPills[y][x];
               this.arrayPills[y + 1][x].y = y + 1;
               this.arrayPills[y][x] = "";
-            } else if (
-              this.arrayPills[found[1].y + 1][found[1].x] == "" &&
-              this.arrayPills[found[0].y + 1][found[0].x] == ""
-            ) {
-              this.arrayPills[found[1].y + 1][found[1].x] = found[1];
-              this.arrayPills[found[0].y + 1][found[0].x] = found[0];
-              this.arrayPills[found[1].y + 1][found[1].x].y = y + 1;
-              this.arrayPills[found[0].y + 1][found[0].x].y = y + 1;
-              this.arrayPills[found[1].y][found[1].x].y = "";
-              this.arrayPills[found[0].y][found[0].x].y = "";
-            } else if (
-              found[0].y == found[1].y &&
-              (this.arrayPills[found[1].y + 1][found[1].x] == "" ||
-                this.arrayPills[found[0].y + 1][found[0].x] == "")
-            ) {
-              console.log("help me");
-
-              /* this.arrayPills[found[1].y + 1][found[1].x] = found[1];
-              this.arrayPills[found[0].y + 1][found[0].x] = found[0];
-              this.arrayPills[found[1].y + 1][found[1].x].y = found[1].y + 1;
-              this.arrayPills[found[0].y + 1][found[0].x].y = found[0].y + 1;
-              this.arrayPills[found[1].y][found[1].x].y = "";
-              this.arrayPills[found[0].y][found[0].x].y = ""; */
+            } else {
+              if (
+                this.arrayPills[found[1].y + 1][found[1].x] == "" &&
+                this.arrayPills[found[0].y + 1][found[0].x] == ""
+              ) {
+                this.arrayPills[found[1].y + 1][found[1].x] = found[1];
+                this.arrayPills[found[0].y + 1][found[0].x] = found[0];
+                this.arrayPills[found[1].y + 1][found[1].x].y = y + 1;
+                this.arrayPills[found[0].y + 1][found[0].x].y = y + 1;
+                this.arrayPills[found[1].y][found[1].x].y = "";
+                this.arrayPills[found[0].y][found[0].x].y = "";
+              } else if (
+                found[0].y == found[1].y &&
+                (this.arrayPills[found[1].y + 1][found[1].x] == "" ||
+                  this.arrayPills[found[0].y + 1][found[0].x] == "")
+              ) {
+                this.arrayPills[found[1].y + 1][found[1].x] = found[1];
+                this.arrayPills[found[0].y + 1][found[0].x] = found[0];
+                this.arrayPills[found[1].y + 1][found[1].x].y = found[1].y + 1;
+                this.arrayPills[found[0].y + 1][found[0].x].y = found[0].y + 1;
+                this.arrayPills[found[1].y][found[1].x].y = "";
+                this.arrayPills[found[0].y][found[0].x].y = "";
+              }
             }
           }
         }

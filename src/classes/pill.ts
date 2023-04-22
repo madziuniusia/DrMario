@@ -138,6 +138,19 @@ export class Pill implements PillConfig {
           pill2.x += dx2;
           pill1.y += dy1;
           pill2.y += dy2;
+          if (pill1.x === pill2.x && pill1.y > pill2.y) {
+            pill1.image = "url(./src/img/" + pill1.color + "Down.png)";
+            pill2.image = "url(./src/img/" + pill2.color + "Up.png)";
+          } else if (pill1.x === pill2.x && pill1.y < pill2.y) {
+            pill1.image = "url(./src/img/" + pill1.color + "Up.png)";
+            pill2.image = "url(./src/img/" + pill2.color + "Down.png)";
+          } else if (pill1.x < pill2.x && pill1.y === pill2.y) {
+            pill1.image = "url(./src/img/" + pill1.color + "Left.png)";
+            pill2.image = "url(./src/img/" + pill2.color + "Right.png)";
+          } else if (pill1.x > pill2.x && pill1.y === pill2.y) {
+            pill1.image = "url(./src/img/" + pill1.color + "Right.png)";
+            pill2.image = "url(./src/img/" + pill2.color + "Left.png)";
+          }
         }
       }
     });

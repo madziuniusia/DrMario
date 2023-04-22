@@ -23,10 +23,10 @@ export class halfPill {
    * @defaultValue `false` if `blocked` is `true`, otherwise `false`
    */
   blocked: boolean;
-  /**
-   * @param this.id This is unique id
-   */
+  /** @param id This is unique id*/
   id: number;
+  /** @param image This is unique id*/
+  image: string;
   /**
    * @param x position x form pill
    * @param y position y form pill
@@ -38,14 +38,21 @@ export class halfPill {
     this.x = x;
     this.y = y;
     this.id = id;
+    this.image = this.imageUrl();
   }
   /**
    * This function draws a color
-   *
    * @returns returns random color in string
-   */
+   * */
   randomColor() {
     const ArrayWithColors = ["yellow", "blue", "brown"];
     return ArrayWithColors[Math.floor(Math.random() * 3)];
+  }
+  /** @returns returns url pill in string*/
+  imageUrl() {
+    let direction = "";
+    if (this.x == 3) direction = "Left";
+    else direction = "Right";
+    return "url(./src/img/" + this.color + direction + ".png)";
   }
 }
