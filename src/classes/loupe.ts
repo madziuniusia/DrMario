@@ -27,7 +27,6 @@ export class Loupe {
       this.tickNumber = 0;
       this.actFrame++;
     }
-    if (this.repeat && this.actFrame == this.posiction.length)
-      this.actFrame = 0;
+    if (this.repeat && this.actFrame == this.posiction.length) this.actFrame = 0;
   }
 }

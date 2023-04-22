@@ -52,12 +52,7 @@ export class Pill implements PillConfig {
     this.fall = setInterval(() => {
       pill1.y++;
       pill2.y++;
-      if (
-        pill1.y >= 15 ||
-        pill2.y >= 15 ||
-        this.arrayPills[pill1.y + 1][pill1.x] != "" ||
-        this.arrayPills[pill2.y + 1][pill2.x] != ""
-      ) {
+      if (pill1.y >= 15 || pill2.y >= 15 || this.arrayPills[pill1.y + 1][pill1.x] != "" || this.arrayPills[pill2.y + 1][pill2.x] != "") {
         clearInterval(this.fall);
         this.blocked = true;
         this.blockedKeyDown = true;

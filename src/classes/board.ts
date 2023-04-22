@@ -66,14 +66,7 @@ export class Board {
           this.arrayCell[y][x].elem.style.backgroundImage = "none";
           this.arrayCell[y][x].elem.innerHTML = "";
         } else {
-          this.arrayCell[y][x].elem.style.backgroundImage =
-            this.arrayPills[y][x].image;
-          /* if (this.arrayPills[y][x].id == "V") {
-          } else {
-            this.arrayCell[y][x].elem.style.backgroundColor =
-              this.arrayPills[y][x].color;
-            this.arrayCell[y][x].elem.innerHTML = this.arrayPills[y][x].id;
-          } */
+          this.arrayCell[y][x].elem.style.backgroundImage = this.arrayPills[y][x].image;
         }
       }
     }
@@ -91,10 +84,8 @@ export class Board {
         this.clear();
         this.points();
 
-        this.arrayCell[pill1.y][pill1.x].elem.style.backgroundImage =
-          pill1.image;
-        this.arrayCell[pill2.y][pill2.x].elem.style.backgroundImage =
-          pill2.image;
+        this.arrayCell[pill1.y][pill1.x].elem.style.backgroundImage = pill1.image;
+        this.arrayCell[pill2.y][pill2.x].elem.style.backgroundImage = pill2.image;
 
         if (addPill.blocked === true) {
           clearInterval(this.gameInterval);
@@ -112,7 +103,7 @@ export class Board {
           this.theEnd("GameOver");
         }
       }
-    }, 100);
+    }, 10);
   }
   /**
    * @param y initial number
@@ -160,6 +151,11 @@ export class Board {
     }
 
     for (let i = 0; i < this.deletePills.length; i++) {
+      const deleteElem = this.arrayPills[this.deletePills[i].y][this.deletePills[i].x];
+      deleteElem.image = "url(./src/img/" + deleteElem.color + "O.png)";
+    }
+    //!POPRAWIĆ NIE DZIAŁAJĄ ZDJĘCIA
+    for (let i = 0; i < this.deletePills.length; i++) {
       this.arrayPills[this.deletePills[i].y][this.deletePills[i].x] = "";
     }
     this.deletePills = [];
@@ -175,10 +171,8 @@ export class Board {
     let points = 300 - Virus.length * 100;
     const pointsDiv: any = document.getElementById("points");
     const numberOfViruses: any = document.getElementById("numberOfViruses");
-    pointsDiv.style.backgroundImage =
-      "url(./src/img/numbers/" + (3 - Virus.length) + ".png)";
-    numberOfViruses.style.backgroundImage =
-      "url(./src/img/numbers/" + Virus.length + ".png)";
+    pointsDiv.style.backgroundImage = "url(./src/img/numbers/" + (3 - Virus.length) + ".png)";
+    numberOfViruses.style.backgroundImage = "url(./src/img/numbers/" + Virus.length + ".png)";
     localStorage.setItem("points", points.toString());
   }
   /** @Returns function that checks whether the pill should fall */
@@ -191,39 +185,41 @@ export class Board {
             const id = this.arrayPills[y][x].id;
             for (let i = 0; i < 16; i++) {
               for (let j = 0; j < 8; j++) {
-                if (this.arrayPills[i][j].id == id)
-                  found.push(this.arrayPills[i][j]);
+                if (this.arrayPills[i][j].id == id) found.push(this.arrayPills[i][j]);
               }
             }
 
             if (found.length != 2) {
-              this.arrayPills[y][x].image =
-                "url(./src/img/" + this.arrayPills[y][x].color + "Dot.png)";
+              this.arrayPills[y][x].image = "url(./src/img/" + this.arrayPills[y][x].color + "Dot.png)";
               this.arrayPills[y + 1][x] = this.arrayPills[y][x];
               this.arrayPills[y + 1][x].y = y + 1;
               this.arrayPills[y][x] = "";
             } else {
-              if (
-                this.arrayPills[found[1].y + 1][found[1].x] == "" &&
-                this.arrayPills[found[0].y + 1][found[0].x] == ""
-              ) {
-                this.arrayPills[found[1].y + 1][found[1].x] = found[1];
-                this.arrayPills[found[0].y + 1][found[0].x] = found[0];
-                this.arrayPills[found[1].y + 1][found[1].x].y = y + 1;
-                this.arrayPills[found[0].y + 1][found[0].x].y = y + 1;
-                this.arrayPills[found[1].y][found[1].x].y = "";
-                this.arrayPills[found[0].y][found[0].x].y = "";
-              } else if (
-                found[0].y == found[1].y &&
-                (this.arrayPills[found[1].y + 1][found[1].x] == "" ||
-                  this.arrayPills[found[0].y + 1][found[0].x] == "")
-              ) {
-                this.arrayPills[found[1].y + 1][found[1].x] = found[1];
-                this.arrayPills[found[0].y + 1][found[0].x] = found[0];
-                this.arrayPills[found[1].y + 1][found[1].x].y = found[1].y + 1;
-                this.arrayPills[found[0].y + 1][found[0].x].y = found[0].y + 1;
-                this.arrayPills[found[1].y][found[1].x].y = "";
-                this.arrayPills[found[0].y][found[0].x].y = "";
+              let f1x = found[1].x,
+                f1y = found[1].y,
+                f0x = found[0].x,
+                f0y = found[0].y;
+              if (f0y === f1y && this.arrayPills[f1y + 1][f1x] == "" && this.arrayPills[f0y + 1][f0x] == "") {
+                this.arrayPills[f1y + 1][f1x] = found[1];
+                this.arrayPills[f0y + 1][f0x] = found[0];
+                this.arrayPills[f1y + 1][f1x].y = y + 1;
+                this.arrayPills[f0y + 1][f0x].y = y + 1;
+                this.arrayPills[f1y][f1x] = "";
+                this.arrayPills[f0y][f0x] = "";
+              } else if (f0x === f1x && (this.arrayPills[f1y + 1][f1x] == "" || this.arrayPills[f0y + 1][f0x] == "")) {
+                if (f1y > f0y) {
+                  this.arrayPills[f1y][f1x].y = f1y + 1;
+                  this.arrayPills[f0y][f0x].y = f0y + 1;
+                  this.arrayPills[f1y + 1][f1x] = this.arrayPills[f1y][f1x];
+                  this.arrayPills[f0y + 1][f0x] = this.arrayPills[f0y][f0x];
+                  this.arrayPills[f0y][f0x] = "";
+                } else {
+                  this.arrayPills[f0y][f0x].y = f0y + 1;
+                  this.arrayPills[f1y][f1x].y = f1y + 1;
+                  this.arrayPills[f0y + 1][f0x] = this.arrayPills[f0y][f0x];
+                  this.arrayPills[f1y + 1][f1x] = this.arrayPills[f1y][f1x];
+                  this.arrayPills[f1y][f1x] = "";
+                }
               }
             }
           }
