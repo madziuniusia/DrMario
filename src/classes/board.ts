@@ -188,9 +188,7 @@ export class Board {
                 if (this.arrayPills[i][j].id == id) found.push(this.arrayPills[i][j]);
               }
             }
-
             if (found.length != 2) {
-              this.arrayPills[y][x].image = "url(./src/img/" + this.arrayPills[y][x].color + "Dot.png)";
               this.arrayPills[y + 1][x] = this.arrayPills[y][x];
               this.arrayPills[y + 1][x].y = y + 1;
               this.arrayPills[y][x] = "";
@@ -227,6 +225,26 @@ export class Board {
       }
     }
     this.beating();
+    this.changeImgWhenFallen();
+  }
+  /** @Returns This function changing img url when there are only half pill on the board */
+  changeImgWhenFallen() {
+    for (let y = 0; y < this.arrayPills.length; y++) {
+      for (let x = 0; x < this.arrayPills[y].length; x++) {
+        if (this.arrayPills[y][x] != "" && this.arrayPills[y][x].id != "V") {
+          let found: any[] = [];
+          const id = this.arrayPills[y][x].id;
+          this.arrayPills.forEach((elm) => {
+            elm.forEach((pill) => {
+              if (pill.id == id) found.push(pill);
+            });
+          });
+          if (found.length != 2) {
+            this.arrayPills[y][x].image = "url(./src/img/" + this.arrayPills[y][x].color + "Dot.png)";
+          }
+        }
+      }
+    }
   }
   /**
    * @param endData string specifying whether you lost or won
