@@ -21,17 +21,16 @@ export class Board {
   /** @param deletePills this array helps with deleting items */
   deletePills: any[] = [];
   /** @param id unique id */
-  id: number;
+  id: number = 0;
   /** @param gameInterval game interval */
-  gameInterval: any;
+  gameInterval: any = 0;
+  deletePillsImg: any[] = [];
   constructor() {
     this.arrayPills.forEach((el) => {
       for (let i = 0; i < el.length; i++) {
         el[i] = "";
       }
     });
-    this.id = 0;
-    this.gameInterval = 0;
     this.createTable();
     this.addVirus();
     this.drawTableWithPills();
@@ -103,7 +102,7 @@ export class Board {
           this.theEnd("GameOver");
         }
       }
-    }, 10);
+    }, 60);
   }
   /**
    * @param y initial number
@@ -149,16 +148,19 @@ export class Board {
         }
       }
     }
+    this.deletePillsImg = this.deletePills;
 
-    for (let i = 0; i < this.deletePills.length; i++) {
-      const deleteElem = this.arrayPills[this.deletePills[i].y][this.deletePills[i].x];
-      deleteElem.image = "url(./src/img/" + deleteElem.color + "O.png)";
-    }
-    //!POPRAWIĆ NIE DZIAŁAJĄ ZDJĘCIA
     for (let i = 0; i < this.deletePills.length; i++) {
       this.arrayPills[this.deletePills[i].y][this.deletePills[i].x] = "";
     }
     this.deletePills = [];
+    this.beatingImgUrl();
+  }
+  /** @Returns This function draw beating pill */
+  beatingImgUrl() {
+    this.deletePillsImg.forEach((elm) => {
+      this.arrayCell[elm.y][elm.x].elem.style.backgroundImage = "url(./src/img/" + elm.color + "O.png)";
+    });
   }
   /** @Returns points counting function*/
   points() {

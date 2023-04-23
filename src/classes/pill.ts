@@ -7,6 +7,7 @@ import { halfPill } from "./halfpill.js";
 interface PillConfig {
   blocked?: boolean;
   blockedKeyDown: boolean;
+  blockedFall: boolean;
 }
 export class Pill implements PillConfig {
   /**
@@ -19,6 +20,11 @@ export class Pill implements PillConfig {
    * @defaultValue `false` if `blocked` is `true`, otherwise `false`
    */
   blockedKeyDown = false;
+  /**
+   * @param blockedFall This is boolen which informs us if function fallen can change y position
+   * @defaultValue `false` if `blocked` is `true`, otherwise `false`
+   */
+  blockedFall = false;
   /**
    * //@param wholePill two new classes halfPill
    * @ignore
@@ -39,8 +45,8 @@ export class Pill implements PillConfig {
       pill2: new halfPill(4, -1, id),
     };
     this.arrayPills = arrayPills;
-    this.interval(500);
     this.movement();
+    this.interval(400);
   }
   /**
    * @param x is the interval speed
@@ -50,8 +56,10 @@ export class Pill implements PillConfig {
     let pill1 = this.wholePill.pill1;
     let pill2 = this.wholePill.pill2;
     this.fall = setInterval(() => {
-      pill1.y++;
-      pill2.y++;
+      if (this.blockedFall === false && this.arrayPills[pill1.y + 1][pill1.x] === "" && this.arrayPills[pill2.y + 1][pill2.x] === "") {
+        pill1.y++;
+        pill2.y++;
+      }
       if (pill1.y >= 15 || pill2.y >= 15 || this.arrayPills[pill1.y + 1][pill1.x] != "" || this.arrayPills[pill2.y + 1][pill2.x] != "") {
         clearInterval(this.fall);
         this.blocked = true;
@@ -64,15 +72,18 @@ export class Pill implements PillConfig {
    * @returns this function changes posiction x and y depending on the key you clicked
    */
   movement() {
+    document.addEventListener("keyup", (e) => {
+      this.blockedFall = false;
+    });
     document.addEventListener("keydown", (e) => {
-      if (this.blockedKeyDown == false) {
+      if (this.blockedKeyDown == false && this.blocked == false) {
         let dx1 = 0,
           dx2 = 0,
           dy1 = 0,
           dy2 = 0,
           pill1 = this.wholePill.pill1,
           pill2 = this.wholePill.pill2;
-
+        this.blockedFall = true;
         if (e.key === "a" || e.key === "ArrowLeft") {
           dx1 = dx2 = -1;
           console.log(">>> KEY MOVE");
