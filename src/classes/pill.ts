@@ -45,8 +45,6 @@ export class Pill implements PillConfig {
       pill2: new halfPill(4, -1, id),
     };
     this.arrayPills = arrayPills;
-    this.movement();
-    this.interval(400);
   }
   /**
    * @param x is the interval speed

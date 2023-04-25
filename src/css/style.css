@@ -14,21 +14,40 @@ HTML {
 }
 
 #board {
-    width: 200px;
+    width: 181px;
     display: flex;
-    padding-left: 380px;
-    padding-top: 140px;
-    justify-content: center;
-    align-items: center;
+    padding-left: 393px;
+    padding-top: 145px;
     flex-wrap: wrap;
 }
 
 .cell {
-    width: 23px;
-    height: 23px;
+    width: 21px;
+    height: 21px;
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
+    border: 0.01px solid rgba(0, 0, 0, 0);
+}
+
+.throwPillCell {
+    width: 21px;
+    height: 21px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    border: 0.01px solid rgba(0, 0, 0, 0);
+}
+
+.throwPillBoard {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    position: absolute;
+    top: 18px;
+    left: 468px;
+    width: 272px;
 }
 
 #blueVirus,
@@ -48,7 +67,8 @@ HTML {
     left: 215px;
 }
 
-#numberOfViruses {
+#numberOfViruses,
+#top {
     width: 23px;
     height: 23px;
     background-position: center;
@@ -58,6 +78,11 @@ HTML {
     position: absolute;
     top: 488.9px;
     left: 836px;
+}
+
+#top {
+    top: 121px;
+    left: 215px;
 }
 
 #endGame {

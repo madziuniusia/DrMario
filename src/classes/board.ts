@@ -5,6 +5,7 @@
  *  */
 import { Pill } from "./Pill.js";
 import { Virus } from "./virus";
+import { throwPill } from "./throwPill";
 
 /** @ignore */
 interface BoardConfig {
@@ -23,8 +24,11 @@ export class Board {
   /** @param id unique id */
   id: number = 0;
   /** @param gameInterval game interval */
-  gameInterval: any = 0;
+  gameInterval: any;
   deletePillsImg: any[] = [];
+  /** @ignore */
+  throwPill: any;
+
   constructor() {
     this.arrayPills.forEach((el) => {
       for (let i = 0; i < el.length; i++) {
@@ -76,8 +80,14 @@ export class Board {
     this.id++;
     let pill1: any = addPill.wholePill.pill1;
     let pill2: any = addPill.wholePill.pill2;
+    let addThrow = new throwPill(pill1.color, pill2.color);
 
     this.gameInterval = setInterval(() => {
+      if (addThrow.blocked === false) {
+        addPill.interval(400);
+        addPill.movement();
+      }
+      addThrow.blocked = true;
       if (pill1.y >= 0) {
         this.fallen();
         this.clear();
@@ -102,7 +112,7 @@ export class Board {
           this.theEnd("GameOver");
         }
       }
-    }, 60);
+    }, 10);
   }
   /**
    * @param y initial number
@@ -257,6 +267,8 @@ export class Board {
     endGame.style.backgroundImage = "url('/src/img/" + endData + ".png')";
     if (endData === "GameOver") {
       const mario: any = document.getElementById("mario");
+      const throwPill: any = document.getElementById("throwPill");
+      throwPill.style.visibility = "hidden";
       mario.style.backgroundImage = "url('/src/img/GameOverMario.png')";
     }
   }
