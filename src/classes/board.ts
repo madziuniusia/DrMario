@@ -84,15 +84,14 @@ export class Board {
 
     this.gameInterval = setInterval(() => {
       if (addThrow.blocked === false) {
-        addPill.interval(400);
+        addPill.interval(300);
         addPill.movement();
       }
       addThrow.blocked = true;
+      this.clear();
+      this.fallen();
+      this.points();
       if (pill1.y >= 0) {
-        this.fallen();
-        this.clear();
-        this.points();
-
         this.arrayCell[pill1.y][pill1.x].elem.style.backgroundImage = pill1.image;
         this.arrayCell[pill2.y][pill2.x].elem.style.backgroundImage = pill2.image;
 
@@ -112,7 +111,7 @@ export class Board {
           this.theEnd("GameOver");
         }
       }
-    }, 10);
+    }, 80);
   }
   /**
    * @param y initial number
@@ -169,7 +168,8 @@ export class Board {
   /** @Returns This function draw beating pill */
   beatingImgUrl() {
     this.deletePillsImg.forEach((elm) => {
-      this.arrayCell[elm.y][elm.x].elem.style.backgroundImage = "url(./src/img/" + elm.color + "O.png)";
+      if (elm.id === "V") this.arrayCell[elm.y][elm.x].elem.style.backgroundImage = "url(./src/img/" + elm.color + "X.png)";
+      else this.arrayCell[elm.y][elm.x].elem.style.backgroundImage = "url(./src/img/" + elm.color + "O.png)";
     });
   }
   /** @Returns points counting function*/
@@ -189,7 +189,7 @@ export class Board {
   }
   /** @Returns function that checks whether the pill should fall */
   fallen() {
-    for (let y = 0; y < 15; y++) {
+    for (let y = 14; y >= 0; y--) {
       for (let x = 0; x < 8; x++) {
         if (this.arrayPills[y][x] != "" && this.arrayPills[y][x].id != "V") {
           if (this.arrayPills[y + 1][x] == "") {

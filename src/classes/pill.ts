@@ -74,6 +74,8 @@ export class Pill implements PillConfig {
       this.blockedFall = false;
     });
     document.addEventListener("keydown", (e) => {
+      console.log(e.key);
+
       if (this.blockedKeyDown == false && this.blocked == false) {
         let dx1 = 0,
           dx2 = 0,
@@ -91,36 +93,27 @@ export class Pill implements PillConfig {
         } else if (e.key === "w" || e.key === "ArrowUp") {
           console.log(">>> KEY UP");
           if (pill1.x === pill2.x) {
-            if (pill1.y < pill2.y) {
-              dx2 = 1;
-              dy2 = -1;
-            } else {
-              dx2 = -1;
-              dy2 = 1;
-            }
+            if (pill1.y < pill2.y) dy1 = dx2 = 1;
+            else dy2 = dx1 = 1;
           } else {
-            if (pill1.x > pill2.x) dx2 = dy2 = 1;
+            if (pill1.x > pill2.x) dx1 = dy1 = -1;
             else dx2 = dy2 = -1;
           }
-        } else if (e.key == "Shift") {
+        } else if (e.key == "q") {
           console.log(">>> KEY SHIFT");
           if (pill1.x === pill2.x) {
-            if (pill1.y < pill2.y) dx2 = dy2 = -1;
-            else dx2 = dy2 = 1;
+            if (pill1.y < pill2.y) {
+              dx1 = dy1 = 1;
+            } else dx2 = dy2 = 1;
           } else {
-            if (pill1.x > pill2.x) {
-              dx2 = 1;
-              dy2 = -1;
-            } else {
-              dx2 = -1;
-              dy2 = 1;
-            }
+            if (pill1.x > pill2.x) dy2 = dx1 = -1;
+            else dy1 = dx2 = -1;
           }
         } else if (e.key === "s" || e.key == "ArrowDown") {
           console.log(">>> KEY DOWN");
           this.blockedKeyDown = true;
           clearInterval(this.fall);
-          this.interval(50);
+          this.interval(40);
         }
         if (
           pill1.x + dx1 >= 0 &&
@@ -142,19 +135,24 @@ export class Pill implements PillConfig {
           pill2.x += dx2;
           pill1.y += dy1;
           pill2.y += dy2;
-          if (pill1.x === pill2.x && pill1.y > pill2.y) {
-            pill1.image = "url(./src/img/" + pill1.color + "Down.png)";
-            pill2.image = "url(./src/img/" + pill2.color + "Up.png)";
-          } else if (pill1.x === pill2.x && pill1.y < pill2.y) {
-            pill1.image = "url(./src/img/" + pill1.color + "Up.png)";
-            pill2.image = "url(./src/img/" + pill2.color + "Down.png)";
-          } else if (pill1.x < pill2.x && pill1.y === pill2.y) {
-            pill1.image = "url(./src/img/" + pill1.color + "Left.png)";
-            pill2.image = "url(./src/img/" + pill2.color + "Right.png)";
-          } else if (pill1.x > pill2.x && pill1.y === pill2.y) {
-            pill1.image = "url(./src/img/" + pill1.color + "Right.png)";
-            pill2.image = "url(./src/img/" + pill2.color + "Left.png)";
-          }
+        } else if (pill1.x === 7 && pill2.x === 7 && this.arrayPills[pill1.y][pill1.x - 1] == "" && this.arrayPills[pill2.y][pill2.x - 1] == "") {
+          pill1.x += dx1 - 1;
+          pill2.x += dx2 - 1;
+          pill1.y += dy1;
+          pill2.y += dy2;
+        }
+        if (pill1.x === pill2.x && pill1.y > pill2.y) {
+          pill1.image = "url(./src/img/" + pill1.color + "Down.png)";
+          pill2.image = "url(./src/img/" + pill2.color + "Up.png)";
+        } else if (pill1.x === pill2.x && pill1.y < pill2.y) {
+          pill1.image = "url(./src/img/" + pill1.color + "Up.png)";
+          pill2.image = "url(./src/img/" + pill2.color + "Down.png)";
+        } else if (pill1.x < pill2.x && pill1.y === pill2.y) {
+          pill1.image = "url(./src/img/" + pill1.color + "Left.png)";
+          pill2.image = "url(./src/img/" + pill2.color + "Right.png)";
+        } else if (pill1.x > pill2.x && pill1.y === pill2.y) {
+          pill1.image = "url(./src/img/" + pill1.color + "Right.png)";
+          pill2.image = "url(./src/img/" + pill2.color + "Left.png)";
         }
       }
     });
